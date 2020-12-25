@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add items to the fridge
+{% endblock %}
+
+{% block main %}
+<form action="/add" method="POST">
+  <div class="ui form">
+  
+    <div class="field">
+      <label>Name</label>
+      <input type="text" placeholder="e.g. Milk" autofocus required name="name" autocomplete="off">
+    </div>
+    <div class="field">
+      <label>When did I bought it?</label>
+      <input type="date" name="date" required>
+    </div>
+      <div class="field">
+        <label>How much?</label>
+        <input type="number" name="quantity_start" required >
+      </div>
+      <div class="field">
+        <label>Unit</label>
+        <select name="unit" class="ui dropdown">
+          <option value="">Select unit</option>
+          <option value="liter">Liter</option>
+          <option value="kg">Kilogram</option>
+          <option value="piece">Piece</option>
+          <option value="gram">Gramm</option>
+        </select>
+      </div>
+  </div>
+  <button class="btn btn-primary" type="submit">Add</button>
+</form>
+{% endblock %}

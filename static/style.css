@@ -1,0 +1,36 @@
+body {
+  box-sizing: border-box;
+}
+
+main {
+  margin: 2rem;
+  display: flex;
+  /*justify-content: center; */
+  flex-direction: column;
+  align-items: center;
+}
+
+.navbar.navbar-expand-lg{
+  padding: 1rem;
+}
+
+.navbar-expand-lg .navbar-nav {
+  align-items: center;
+}
+
+.profile-picture{
+  border-radius: 50%;
+  width: 50px;
+}
+.collapse.navbar-collapse {
+  justify-content: flex-end;
+}
+.intro span {
+  font-weight: 900;
+}
+form {
+  width: 100%;
+}
+form select {
+  /*padding: 0.6rem 1rem;*/
+}
