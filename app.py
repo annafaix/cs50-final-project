@@ -4,7 +4,7 @@ import os
 import sqlite3
 
 # Third-party libraries
-from flask import Flask, request, redirect, render_template, session, url_for
+from flask import Flask, request, redirect, render_template, jsonify, session, make_response, url_for
 from flask_login import (
     LoginManager,
     current_user,
@@ -172,12 +172,50 @@ def addItem():
         quantity_update = quantity
         unit = request.form.get("unit")
         user = session["user_id"]
+        cathegory = request.form.get("cathegory")
         # Add food to the fridge datebase
-        FoodItem.create(name, date, quantity, quantity_update, unit, user)
+        FoodItem.create(name, date, quantity, quantity_update, unit, user, cathegory)
         return redirect("/")
 
     else:
         return render_template("/add.html")
+
+
+@app.route('/delete-item', methods=['GET', 'POST'])
+@login_required
+def delete_item():
+    req = request.get_json()
+    item_id = int(req['0'])
+    FoodItem.delete(item_id)
+    res = make_response(jsonify(req), 200)
+    return res
+
+
+@app.route('/add-to-shoppinglist', methods=['GET', 'POST'])
+@login_required
+def add_to_shopping_list():
+    req = request.get_json()
+    print(req)
+    
+    res = make_response(jsonify(req), 200)
+    return res
+
+
+@app.route('/shopping-list', methods=["GET", "POST"])
+@login_required
+def show_shopping_list():
+    return render_template("/shopping-list.html")
+
+
+@app.route('/update-quantity', methods=["GET", "POST"])
+@login_required
+def change_quantity():
+    req = request.get_json()
+    item_quantity = req['value']
+    item_id = req['id']
+    FoodItem.update(item_quantity, item_id)
+    res = make_response(jsonify(req), 200)
+    return res
 
 
 if __name__ == "__main__":

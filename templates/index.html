@@ -6,16 +6,17 @@
 
 {% block main %}
 <div class="intro">
-  <h1>Hello, <span> {{current_user.name}}</span>! You're logged in!</h1>
+  <p>Hello, <span> {{current_user.name}}</span>! You're logged in!</p>
+  <a class="ui right labeled icon positive large button" href="/add">
+    Put some food into the frigde <i class="plus square outline icon"></i>
+  </a>
 </div>
-<a class="ui right labeled icon positive large button" href="/add">
-  Put some food into the frigde <i class="plus square outline icon"></i>
-</a>
+
 <section class="food-list">
-  <h2>What is in my fridge?</h2>  
+  <h1>What is in my fridge?</h1>  
   <div class="ui cards">
   {% for food in fridge %}
-    <div class="card">
+    <div class="card {{food['cathegory']}}" id="{{food['id']}}">
       <div class="content">
         <div class="header">
           {{food["name"]}}
@@ -24,21 +25,97 @@
           Bought {{food["date"]}}
         </div>
         <div class="description">
-          {{food["quantity"]}} {{food["unit"]}}
+          <span id="item_quantity{{food['id']}}">{{food["quantity_update"]}}</span> {{food["unit"]}}
         </div>
       </div>
-      <div class="extra content">
-        <div class="ui two buttons">
-          <div class="ui basic green button"><i class="file alternate outline icon"></i>Add to shopping list</div>
-          <div class="ui basic red button"><i class="trash icon"></i> Delete</div>
-         
+        <div class="extra content">
+          <div class="ui left floated secondary basic button" onclick="add_to_shopping_list($`{{food['name']}}`)" type="button" aria-label="Add to shopping list">
+            <i class="file alternate outline icon"></i>Add to shopping list
+          </div>
+          <div class="ui right floated negative icon button" onclick="delete_item($`{{food['id']}}`)" type="button" aria-label="Delete item">
+            <i class="trash icon"></i>
+          </div>
+        </div>
+        <div class="extra content">
+          <label>Update quantity:
+          <input type="range" min="0" max="{{food['quantity']}}" value="{{food['quantity_update']}}" 
+          class="slider" onchange="change_quantity(this.value,$`{{food['id']}}`);"/>
+        </label>
         </div>
       </div>
-      <div class="slidecontainer">
-        <input type="range" min="0" max="{{food['quantity']}}"  class="slider" />
-      </div>
-    </div>
   {% endfor %}
 </section>
 
+{% endblock %}
+
+{% block script %}
+  <script>
+    function delete_item(id) {
+      fetch(`${window.origin}/delete-item`, {
+        method:"POST",
+        credentials: "include",
+        body: JSON.stringify(id),
+        cache:"no-cache",
+        headers: new Headers({
+          'content-type': 'application/json'
+        })
+      }).then(response => {
+        if(response.status !== 200){
+          console.error(`Error: ${response.status}`)
+          return
+        }
+        response.json().then(data => {
+          let deleteCard = document.getElementById(data[0])
+          deleteCard.remove()
+        })
+      })
+    }
+
+    function add_to_shopping_list(item) {
+      let itemName = item[0]
+      fetch(`${window.origin}/add-to-shoppinglist`, {
+        method:"POST",
+        credentials: "include",
+        body: JSON.stringify(itemName),
+        cache:"no-cache",
+        headers: new Headers({
+          'content-type': 'application/json'
+        })
+      }).then(response => {
+        if(response.status !== 200){
+          console.error(`Error: ${response.status}`)
+          return
+        }
+        response.json().then(data => {
+          console.log(data)
+        })
+      })
+    }
+
+    function change_quantity(value, id){
+      let item = {
+        value,
+        id: id[0]
+      }
+
+      fetch(`${window.origin}/update-quantity`, {
+        method:"POST",
+        credentials: "include",
+        body: JSON.stringify(item),
+        cache:"no-cache",
+        headers: new Headers({
+          'content-type': 'application/json'
+        })
+      }).then(response => {
+        if(response.status !== 200){
+          console.error(`Error: ${response.status}`)
+          return
+        }
+        response.json().then(data => {
+          let item_quantity = document.getElementById(`item_quantity${data.id}`);
+          item_quantity.innerHTML = data.value;
+        })
+      })
+    }
+  </script>
 {% endblock %}

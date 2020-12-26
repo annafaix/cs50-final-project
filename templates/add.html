@@ -16,21 +16,37 @@
       <label>When did I bought it?</label>
       <input type="date" name="date" required>
     </div>
-      <div class="field">
-        <label>How much?</label>
-        <input type="number" name="quantity_start" required >
-      </div>
-      <div class="field">
-        <label>Unit</label>
-        <select name="unit" class="ui dropdown">
-          <option value="">Select unit</option>
-          <option value="liter">Liter</option>
-          <option value="kg">Kilogram</option>
-          <option value="piece">Piece</option>
-          <option value="gram">Gramm</option>
-        </select>
-      </div>
+    <div class="field">
+      <label>How much?</label>
+      <input type="number" name="quantity_start" required >
+    </div>
+    <div class="field">
+      <label>Unit</label>
+      <select name="unit" class="ui dropdown">
+        <option value="">Select unit</option>
+        <option value="liter">Liter</option>
+        <option value="kg">Kilogram</option>
+        <option value="piece(s)">Piece(s)</option>
+        <option value="package(s)">Packege(s)</option>
+        <option value="gram">Gramm</option>
+        <option value="mililiter">Mililiter</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Cathegory</label>
+      <select name="cathegory" class="ui dropdown">
+        <option value="">Select cathegory</option>
+        <option value="dairy">Dairy</option>
+        <option value="meat">Meat</option>
+        <option value="green">Fruit/vegetable</option>
+        <option value="drinks">Drinks</option>
+        <option value="others">Others</option>
+      </select>
+    </div>
   </div>
-  <button class="btn btn-primary" type="submit">Add</button>
+  <button class="ui green right labeled icon button" type="submit">
+    <i class="right arrow icon"></i>
+    Add 
+  </button>
 </form>
 {% endblock %}

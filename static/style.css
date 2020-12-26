@@ -4,12 +4,48 @@ body {
 
 main {
   margin: 2rem;
+  
+}
+.login {
   display: flex;
-  /*justify-content: center; */
   flex-direction: column;
   align-items: center;
 }
-
+.login > h2 {
+  padding: 3rem 0;
+}
+.login h2 span::before{
+  content: ' ';
+  font-size: 60px;
+  /*color: #aa3939;*/
+  font-family: 'Dancing Script', cursive;;
+  animation: message 15s infinite;
+}
+@keyframes message {
+  10% { content: 'milk'}
+  30% { content: 'cheese'}
+  50% { content: 'eggs' }
+  75% { content: 'butter'}
+  100% { content: 'chocolate'}
+}
+.login > .ui.button{
+  background: #4285F4;
+  color: #fff;
+}
+.intro {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid grey;
+  width: 100%;
+}
+.food-list h1{  
+  text-align: center;
+  padding-bottom: 1rem;
+}
 .navbar.navbar-expand-lg{
   padding: 1rem;
 }
@@ -28,9 +64,31 @@ main {
 .intro span {
   font-weight: 900;
 }
-form {
-  width: 100%;
+.intro p {
+  font-size: 22px;
+  margin: 0;
 }
-form select {
-  /*padding: 0.6rem 1rem;*/
+.ui.form {
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+}
+
+select.ui.dropdown {
+  height: auto;
+}
+
+.ui.cards >.card.drinks {
+  border: 3px solid #FFA500;
+}
+.ui.cards >.card.dairy {
+  border: 3px solid #1E90FF;
+}
+.ui.cards >.card.green {
+  border: 3px solid #228B22;
+}
+.ui.cards >.card.meat {
+  border: 3px solid #DC143C;
+}
+.ui.cards >.card.others {
+  border: 3px solid #DCDCDC;
 }
