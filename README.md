@@ -15,6 +15,6 @@ When you took the last milk in the morning, just click on "add to shopping list"
     Jinja 2.11.12+
     Flask 1.1.2+
 
-## Framework
-    SemanticUIi@2.4.2
+## Frameworks
+    SemanticUI@2.4.2
     Bootstrap@5.0.0
