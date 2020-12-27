@@ -1,6 +1,6 @@
 # My CS50 final project - FridgeCon
 
-**"Did you also bought milk?"**
+**"Did you also buy milk?"**
 
 *-said nobody using FridgeCon or his/hers roommate* :wink:
 
