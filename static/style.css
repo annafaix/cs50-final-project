@@ -92,3 +92,17 @@ select.ui.dropdown {
 .ui.cards >.card.others {
   border: 3px solid #DCDCDC;
 }
+.shopping-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.shopping-list li {
+  font-size: 20px;
+}
+.shopping-list h1{
+  border-bottom: 1px solid grey;
+}
+.aside-container > div {
+  margin-bottom: 20px;
+}

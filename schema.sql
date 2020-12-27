@@ -13,3 +13,8 @@ CREATE TABLE fridge (
   unit TEXT NOT NULL,
   user TEXT NOT NULL
 )
+
+CREATE TABLE shoppinglist (
+  name TEXT NOT NULL, 
+  user TEXT NOT NULL
+)

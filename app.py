@@ -19,7 +19,7 @@ from flask_session import Session
 # Internal imorts
 import db
 from user import User
-from food import FoodItem
+from food import FoodItem, ShoppingItem
 
 
 # Configuration
@@ -74,7 +74,7 @@ def get_google_provider_cfg():
 def index():
     if current_user.is_authenticated:
         user = session["user_id"]
-        fridge = FoodItem.get(user) 
+        fridge = FoodItem.get(user)
         return render_template("/index.html", current_user=current_user, fridge=fridge)
     else:
         return render_template("/login.html")
@@ -196,15 +196,22 @@ def delete_item():
 def add_to_shopping_list():
     req = request.get_json()
     print(req)
-    
+    FoodItem.add_to_list(req, user=session["user_id"])
     res = make_response(jsonify(req), 200)
     return res
 
 
-@app.route('/shopping-list', methods=["GET", "POST"])
+@app.route('/shopping-list', methods=['GET', 'POST'])
 @login_required
 def show_shopping_list():
-    return render_template("/shopping-list.html")
+    user = session["user_id"]
+    shopping_list = ShoppingItem.get_shopping_list(user)
+    if request.method == "POST":
+        name = request.form.get("shopp_item_name")
+        ShoppingItem.add_to_list(name, user)
+        return redirect("/shopping-list")
+    else:
+        return render_template("/shopping-list.html", shopping_list=shopping_list)
 
 
 @app.route('/update-quantity', methods=["GET", "POST"])

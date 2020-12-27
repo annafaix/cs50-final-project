@@ -5,8 +5,77 @@
 {% endblock %}
 
 {% block main %}
-  <h1>Need to buy</h1>
-  <ol class="ui ordered list">
-    <li class="item">Apples</li>
-  </ol>  
+<section class="shopping-list">  
+  <div>
+    <h1>Need to buy</h1>
+    <ol class="ui ordered list" id="list-content">
+      {% for item in shopping_list %}
+      <li class="">{{item['name']}}</li>
+      {% endfor %}
+    </ol>
+    <h3>And do not forget to also buy ...</h3>
+    <form action="/shopping-list" method="POST">
+      <div class="ui form">
+        <div class="fields">
+          <div class="field">
+            <label>Name</label>
+            <input type="text" id="input_name" placeholder="e.g. Milk" autofocus required name="shopp_item_name" autocomplete="off">
+          </div>
+        </div>
+        <button class="ui green right labeled icon button" type="submit" onclick="new_item_to_shopping_list();">
+          <i class="right arrow icon"></i>
+          Add to shopping list
+        </button>
+      </div>
+    </form> 
+  </div>
+  <div class="aside-container">
+    <div>
+      <h3>Print the list</h3>
+      <button class="ui blue right labeled icon button">
+        <i class="right print icon"></i>
+        Print
+      </button> 
+   </div>
+   <div>
+    <h3>Send it to (your roomates) email</h3>
+    <button class="ui violet right labeled icon button">
+      <i class="right envelope icon"></i>
+      Send email
+    </button> 
+  </div>
+</div>
+  </section>
+{% endblock %}
+
+{% block script %}
+<script>
+  function new_item_to_shopping_list() {
+    let list_content = document.getElementById("list-content");
+    let input_name = document.getElementById("input_name");
+    let data = input_name.value;
+    console.log(data)
+    
+    fetch(`${window.origin}/shopping-list'`, {
+        method:"POST",
+        credentials: "include",
+        body: JSON.stringify(data),
+        cache:"no-cache",
+        headers: new Headers({
+          'content-type': 'application/json'
+        })
+      }).then(response => {
+        if(response.status !== 200){
+          console.error(`Error: ${response.status}`)
+          return
+        }
+        /*response.json().then(data => {
+          console.log(data)
+          if(input_name.length == ""){
+            list_content.appendChild(input_name.value)
+          }
+        })*/
+      })
+  }
+</script>
 {% endblock %}
