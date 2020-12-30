@@ -69,12 +69,12 @@
           console.error(`Error: ${response.status}`)
           return
         }
-        /*response.json().then(data => {
+        response.json().then(data => {
           console.log(data)
           if(input_name.length == ""){
             list_content.appendChild(input_name.value)
           }
-        })*/
+        })
       })
   }
 </script>
